@@ -16,6 +16,9 @@ import taxi.DAO.taxiDAO;
 import taxi.DAO.DAO;
 import taxi.metier.taxi;
 import myconnections.DBConnection;
+import taxi.DAO.locationDAO;
+import taxi.metier.location;
+import taxi.metier.locationVue;
 
 /**
  *
@@ -26,12 +29,13 @@ public class GestionTaxi {
     Scanner sc = new Scanner(System.in);
     taxi taxiActuel = null;
     DAO<taxi> taxiDAO = null;
+    DAO<locationVue> locationDAO = null;
 
     public GestionTaxi() {
 
     }
 
-    public void gestion() {
+    public void gestion() throws SQLException {
         Connection dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
             System.out.println("connection invalide");
@@ -41,11 +45,13 @@ public class GestionTaxi {
         System.out.println("connexion établie");
 
         taxiDAO = new taxiDAO();
+        locationDAO = new locationDAO();
         taxiDAO.setConnection(dbConnect);
+        locationDAO.setConnection(dbConnect);
 
         int ch = 0;
         do {
-            System.out.println("1.Nouveau taxi \n2.Recherche de taxi\n3.Modification d'un taxi\n4.Suppression d'un taxi\n5.Recherche sur la description\n6.fin");
+            System.out.println("1.Nouveau taxi \n2.Recherche de taxi\n3.Modification d'un taxi\n4.Suppression d'un taxi\n5.Recherche sur la description\n6.Recherche d'une location\n7.Fin");
             System.out.print("Choix : ");
             ch = sc.nextInt();
             sc.skip("\n");
@@ -64,20 +70,18 @@ public class GestionTaxi {
                     break;
                 case 5:
                     rechDescription();
-                    break;
-                /*
+                    break;              
                 case 6:
-                    derncom();
-                    break;
-                 */
-                case 6:
+                    rechercheLoc();
+                    break;                
+                case 7:
                     System.out.println("Fin !");
                     break;
                 default:
                     System.out.println("Choix incorrect");
             }
 
-        } while (ch != 6);
+        } while (ch != 7);
         DBConnection.closeConnection();
     }
 
@@ -173,7 +177,19 @@ public class GestionTaxi {
         }
     }
      */
-    public static void main(String[] args) {
+    public void rechercheLoc() throws SQLException {
+        System.out.println("Recherche d'une location. ");
+        System.out.println("ID recherché : ");
+        int id = sc.nextInt();
+
+        List<locationVue> loc = ((locationDAO) locationDAO).rechLoc(id);
+        for (locationVue t : loc) {
+            System.out.println(loc);
+
+        }
+    }
+
+    public static void main(String[] args) throws SQLException {
         GestionTaxi gt = new GestionTaxi();
         gt.gestion();
 

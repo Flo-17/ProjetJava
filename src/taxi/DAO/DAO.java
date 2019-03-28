@@ -47,6 +47,8 @@ public abstract class DAO<T> {
          * @throws SQLException exception d'effacement
 	 */
 	public abstract void delete(T obj) throws SQLException;
+
+    
         
       
 }
