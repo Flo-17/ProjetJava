@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Florian Cammarata
+ * @version 1.0
  */
 package taxi.DAO;
 
@@ -21,8 +21,15 @@ import taxi.metier.taxi;
  *
  * @author camma
  */
-public class taxiDAO extends DAO<taxi> {
-
+public class taxiDAO extends DAO<taxi> {    
+    
+    /**
+     * création d'un taxi sur base des valeurs de son objet métier
+     *
+     * @throws SQLException erreur de création
+     * @param obj taxi à créer
+     * @return taxi créé
+     */
     @Override
     public taxi create(taxi obj) throws SQLException {
 
@@ -55,9 +62,17 @@ public class taxiDAO extends DAO<taxi> {
         }
     }
 
+    
+    
+    /**
+     * récupération des données d'un taxi sur base de son identifiant
+     *
+     * @throws SQLException id inconnu
+     * @param idtaxi identifiant du taxi
+     * @return taxi trouvé
+     */
     @Override
     public taxi read(int idtaxi) throws SQLException {
-
         String req = "select * from taxi where idtaxi = ?";
 
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
@@ -66,7 +81,6 @@ public class taxiDAO extends DAO<taxi> {
             try (ResultSet rs = pstm.executeQuery()) {
                 if (rs.next()) {
 
-                    //int idtaxi = rs.getInt("IDTAXI");
                     String immatriculation = rs.getString("IMMATRICULATION");
                     String carburant = rs.getString("CARBURANT");
                     float prixkm = rs.getInt("PRIXKM");
@@ -75,7 +89,7 @@ public class taxiDAO extends DAO<taxi> {
                     return new taxi(idtaxi, immatriculation, carburant, prixkm, description);
 
                 } else {
-                    throw new SQLException("ID inconnu");
+                    throw new SQLException("L'ID est inconnu");
                 }
 
             }
@@ -84,9 +98,16 @@ public class taxiDAO extends DAO<taxi> {
 
     }
 
+    
+    /**
+     * mise à jour des données du taxi sur base de son identifiant
+     *
+     * @return taxi
+     * @param obj taxi à mettre à jour
+     * @throws SQLException erreur de mise à jour
+     */
     @Override
     public taxi update(taxi obj) throws SQLException {
-
         String query = "update taxi set immatriculation = ?, carburant = ?, prixkm = ?, description = ? where idtaxi = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
 
@@ -97,7 +118,7 @@ public class taxiDAO extends DAO<taxi> {
             pstm.setString(4, obj.getDescription());
             int n = pstm.executeUpdate();
             if (n == 0) {
-                throw new SQLException("aucune ligne client mise à jour");
+                throw new SQLException("Aucune ligne client mise à jour");
             }
             else
             {
@@ -108,9 +129,14 @@ public class taxiDAO extends DAO<taxi> {
 
     }
 
+      /**
+     * effacement du taxi sur base de son identifiant
+     *
+     * @throws SQLException erreur d'effacement
+     * @param obj taxi à effacer
+     */
     @Override
     public void delete(taxi obj) throws SQLException {
-
         String query1 = "DELETE FROM TAXI WHERE idtaxi = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query1)) {
             pstm.setInt(1, obj.getIdtaxi());
@@ -126,6 +152,14 @@ public class taxiDAO extends DAO<taxi> {
         }
     }
 
+    
+    /**
+     * méthode permettant de récupérer tous les taxis dont la description comporte un
+     * certain mot
+     * @param desc mot de la description recherché
+     * @return liste de taxi
+     * @throws SQLException mot introuvable
+     */
     public List<taxi> rechDesc(String desc) throws SQLException {
         List<taxi> plusieurs = new ArrayList<>();
         String req = "select * from taxi where description LIKE ?";

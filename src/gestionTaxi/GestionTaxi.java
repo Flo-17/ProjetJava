@@ -1,35 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Florian Cammarata
+ * @version 1.0
  */
 package gestionTaxi;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import taxi.DAO.taxiDAO;
 import taxi.DAO.DAO;
 import taxi.metier.taxi;
 import myconnections.DBConnection;
 import taxi.DAO.locationDAO;
+import taxi.DAO.locationVueDAO;
 import taxi.metier.location;
 import taxi.metier.locationVue;
 
-/**
- *
- * @author Michel
- */
 public class GestionTaxi {
 
     Scanner sc = new Scanner(System.in);
     taxi taxiActuel = null;
+    location locationActuelle = null;
     DAO<taxi> taxiDAO = null;
-    DAO<locationVue> locationDAO = null;
+    DAO<locationVue> locationVueDAO = null;
+    DAO<location> locationDAO = null;
 
     public GestionTaxi() {
 
@@ -45,47 +46,96 @@ public class GestionTaxi {
         System.out.println("connexion établie");
 
         taxiDAO = new taxiDAO();
+        locationVueDAO = new locationVueDAO();
         locationDAO = new locationDAO();
         taxiDAO.setConnection(dbConnect);
+        locationVueDAO.setConnection(dbConnect);
         locationDAO.setConnection(dbConnect);
 
         int ch = 0;
         do {
-            System.out.println("1.Nouveau taxi \n2.Recherche de taxi\n3.Modification d'un taxi\n4.Suppression d'un taxi\n5.Recherche sur la description\n6.Recherche d'une location\n7.Fin");
+            System.out.println("1.Taxi\n2.Location");
             System.out.print("Choix : ");
             ch = sc.nextInt();
             sc.skip("\n");
             switch (ch) {
                 case 1:
-                    nouveau();
+                    int ch2 = 0;
+                    do {
+                        System.out.println("1.Nouveau taxi \n2.Recherche de taxi\n3.Modification d'un taxi\n4.Suppression d'un taxi\n5.Recherche sur la description\n6.Retour");
+                        System.out.print("Choix : ");
+                        ch2 = sc.nextInt();
+                        sc.skip("\n");
+                        switch (ch2) {
+                            case 1:
+                                nouveauTaxi();
+                                break;
+                            case 2:
+                                rechercheTaxi();
+                                break;
+                            case 3:
+                                modifTaxi();
+                                break;
+                            case 4:
+                                supTaxi();
+                                break;
+                            case 5:
+                                rechDescriptionTaxi();
+                                break;
+                            case 6:
+                                System.out.println("Retour.");
+                                break;
+                            default:
+                                System.out.println("Choix incorrect");
+                        }
+
+                    } while (ch2 != 6);
                     break;
                 case 2:
-                    recherche();
-                    break;
-                case 3:
-                    modif();
-                    break;
-                case 4:
-                    sup();
-                    break;
-                case 5:
-                    rechDescription();
-                    break;              
-                case 6:
-                    rechercheLoc();
-                    break;                
-                case 7:
-                    System.out.println("Fin !");
-                    break;
-                default:
-                    System.out.println("Choix incorrect");
-            }
+                    int ch3 = 0;
+                    do {
+                        System.out.println("1.Nouvelle location \n2.Recherche d'une location\n3.Modification d'une location\n4.Suppression d'une location\n5.Total d'une location\n6.Retour");
+                        System.out.print("Choix : ");
+                        ch3 = sc.nextInt();
+                        sc.skip("\n");
+                        switch (ch3) {
+                            case 1:
+                        {
+                            try {
+                                nouvelleLoc();
+                            } catch (ParseException ex) {
+                                Logger.getLogger(GestionTaxi.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                                break;
+                            case 2:
+                                rechercheLoc();
+                                break;
+                            case 3:
+                                modifLoc();
+                                break;
+                            case 4:
+                                supLoc();
+                                break;
+                            case 5:
+                                //totalLoc();
+                                break;
+                            case 6:
+                                System.out.println("Retour.");
+                                break;
+                            default:
+                                System.out.println("Choix incorrect");
+                        }
 
-        } while (ch != 7);
+                    } while (ch3 != 6);
+                    break;
+            }
+        } while (ch != 2);
+
         DBConnection.closeConnection();
     }
 
-    public void nouveau() {
+    public void nouveauTaxi() {
 
         System.out.print("Immatriculation : ");
         String immatriculation = sc.nextLine();
@@ -106,7 +156,7 @@ public class GestionTaxi {
 
     }
 
-    public void recherche() {
+    public void rechercheTaxi() {
         try {
             System.out.println("ID recherché :");
             int id = sc.nextInt();
@@ -118,7 +168,7 @@ public class GestionTaxi {
         }
     }
 
-    public void modif() {
+    public void modifTaxi() {
         System.out.println("ID ? ");
         int idtaxi = sc.nextInt();
         sc.skip("\n");
@@ -141,7 +191,7 @@ public class GestionTaxi {
 
     }
 
-    public void sup() {
+    public void supTaxi() {
         try {
             System.out.println("ID ? ");
             int idtaxi = sc.nextInt();
@@ -152,7 +202,7 @@ public class GestionTaxi {
         }
     }
 
-    public void rechDescription() {
+    public void rechDescriptionTaxi() {
         System.out.println("Mot de la description recherché : ");
         String nom = sc.nextLine();
         try {
@@ -165,29 +215,93 @@ public class GestionTaxi {
         }
     }
 
-    /*
-    public void derncom() {
-        try {
-            LocalDate dt = ((ClientDAO) clientDAO).dern_com(clActuel);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E d MMMM yyyy", Locale.FRENCH);
-            String aff = dt.format(dtf);
-            System.out.println("date de la denière commande de " + clActuel + " = " + aff);
-        } catch (SQLException e) {
-            System.out.println("erreur " + e.getMessage());
-        }
-    }
-     */
     public void rechercheLoc() throws SQLException {
         System.out.println("Recherche d'une location. ");
         System.out.println("ID recherché : ");
         int id = sc.nextInt();
 
-        List<locationVue> loc = ((locationDAO) locationDAO).rechLoc(id);
+        List<locationVue> loc = ((locationVueDAO) locationVueDAO).rechLoc(id);
         for (locationVue t : loc) {
             System.out.println(loc);
 
         }
     }
+
+    public void nouvelleLoc() throws ParseException {
+
+        System.out.print("Date de la location : ");
+        String dateloc = sc.nextLine();
+        System.out.print("Km total : ");
+        int kmtotal = sc.nextInt();
+        System.out.print("Acompte : ");
+        float acompte = sc.nextFloat();
+        sc.skip("\n");
+        System.out.println("Total : ");
+        float total = sc.nextFloat();
+        sc.skip("\n");
+        System.out.println("ID Adresse de debut : ");
+        int idadrdebut = sc.nextInt();
+        System.out.println("ID Adresse de fin : ");
+        int idadrfin = sc.nextInt();
+        System.out.println("ID du taxi : ");
+        int idtaxi = sc.nextInt();
+        System.out.println("ID du client : ");
+        int idclient = sc.nextInt();
+        locationActuelle = new location(0, dateloc, kmtotal, acompte, total, idadrdebut, idadrfin, idtaxi, idclient);
+        try {
+            locationActuelle = locationDAO.create(locationActuelle);
+            System.out.println("Location : " + locationActuelle);
+        } catch (SQLException e) {
+            System.out.println("erreur :" + e);
+        }
+
+    }
+    
+    public void modifLoc() {
+        System.out.println("ID ? ");
+        int idloc = sc.nextInt();
+        sc.skip("\n");
+        System.out.println("Nouvelle date :");
+        String dateloc = sc.nextLine();
+        System.out.println("Nouveau km total :");
+        int kmtotal = sc.nextInt();
+        System.out.println("Nouveau acompte :");
+        float acompte = sc.nextFloat();
+        sc.skip("\n");
+        System.out.println("Nouveau total :");
+        float total = sc.nextFloat();
+        sc.skip("\n");
+        System.out.println("Nouvel id d'adresse de debut :");
+        int idadrdebut = sc.nextInt();
+        System.out.println("Nouvel id d'adresse de fin :");
+        int idadrfin = sc.nextInt();
+        System.out.println("Nouveau id taxi :");
+        int idtaxi = sc.nextInt();
+        System.out.println("Nouveau id client :");
+        int idclient = sc.nextInt();
+        
+
+        locationActuelle = new location(idloc, dateloc, kmtotal, acompte, total, idadrdebut, idadrfin, idtaxi, idclient);
+        try {
+            locationDAO.update(locationActuelle);
+        } catch (SQLException e) {
+            System.out.println("erreur " + e.getMessage());
+        }
+
+    }
+    
+    public void supLoc() {
+        try {
+            System.out.println("ID ? ");
+            int idloc = sc.nextInt();
+            locationActuelle = new location(idloc, "", 0, 0, 0, 0, 0, 0, 0);
+            locationDAO.delete(locationActuelle);
+        } catch (SQLException e) {
+            System.out.println("erreur " + e.getMessage());
+        }
+    }
+    
+    
 
     public static void main(String[] args) throws SQLException {
         GestionTaxi gt = new GestionTaxi();
