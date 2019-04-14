@@ -5,6 +5,8 @@
  */
 package taxi.metier;
 
+import java.util.Objects;
+
 public class taxi {
 
     protected int idtaxi;
@@ -145,11 +147,39 @@ public class taxi {
         this.description = description;
     }
 
+    
+    
+    
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
     /**
      * methode toString
      *
      * @return infos completes
      */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final taxi other = (taxi) obj;
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Taxi : " + idtaxi + ", immatriculation : " + immatriculation + " (" + carburant + "), prix au km : " + prixkm + ". " + description;
