@@ -152,7 +152,7 @@ public class taxiDAOTest {
     }
 
     /**
-     * Test of rechNom method, of class taxiDAO.
+     * Test of rechDesc method, of class taxiDAO.
      */
     @Test
     public void testRechDesc() throws Exception {

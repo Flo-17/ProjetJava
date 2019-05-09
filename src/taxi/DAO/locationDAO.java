@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import taxi.metier.location;
+import taxi.metier.taxi;
 
 
 public class locationDAO extends DAO<location> {
@@ -124,8 +125,35 @@ public class locationDAO extends DAO<location> {
     }
   
     @Override
-    public location read(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public location read(int idloc) throws SQLException {
+        String req = "select * from location where idloc = ?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+
+            pstm.setInt(1, idloc);
+            try (ResultSet rs = pstm.executeQuery()) {
+                if (rs.next()) {
+
+                    String dateloc = rs.getString("DATELOC");
+                    int kmtotal = rs.getInt("KMTOTAL");
+                    float acompte = rs.getFloat("ACOMPTE");
+                    float total = rs.getFloat("TOTAL");
+                    int idclient = rs.getInt("IDCLIENT");
+                    int idtaxi = rs.getInt("IDTAXI");
+                    int idadrdebut= rs.getInt("IDADRDEBUT");
+                    int idadrfin= rs.getInt("IDADRFIN");
+
+                    return new location(idloc,dateloc,kmtotal,acompte,total,idclient,idtaxi,idadrdebut,idadrfin);
+
+                } else {
+                    throw new SQLException("L'ID est inconnu");
+                }
+
+            }
+
+        }
+
+    }
     }
 
 
