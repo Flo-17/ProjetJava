@@ -5,18 +5,14 @@
  */
 package taxi.DAO;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import taxi.metier.location;
-import taxi.metier.taxi;
-
 
 public class locationDAO extends DAO<location> {
 
-    
     /**
      * création d'une location sur base des valeurs de son objet métier
      *
@@ -24,7 +20,6 @@ public class locationDAO extends DAO<location> {
      * @param obj location à créer
      * @return location créée
      */
-    
     @Override
     public location create(location obj) throws SQLException {
 
@@ -36,7 +31,6 @@ public class locationDAO extends DAO<location> {
                 = "select idloc from location where idadrdebut =? and idadrfin = ? and idtaxi = ? and idclient = ?;";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
                 PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
-
 
             pstm1.setString(1, obj.getDateLoc());
             pstm1.setInt(2, obj.getKmtotal());
@@ -64,7 +58,7 @@ public class locationDAO extends DAO<location> {
             }
         }
     }
-    
+
     /**
      * mise à jour des données de la location sur base de son identifiant
      *
@@ -72,7 +66,6 @@ public class locationDAO extends DAO<location> {
      * @param obj location à mettre à jour
      * @throws SQLException erreur de mise à jour
      */
-    
     @Override
     public location update(location obj) throws SQLException {
         String query = "update location set dateloc = ?, kmtotal = ?, acompte = ?, total = ?, idadrdebut = ?, idadrfin = ?, idtaxi = ?, idclient = ? where idloc = ?";
@@ -90,23 +83,20 @@ public class locationDAO extends DAO<location> {
             int n = pstm.executeUpdate();
             if (n == 0) {
                 throw new SQLException("Aucune ligne client mise à jour");
-            }
-            else
-            {
-                System.out.println("Taxi "+obj.getIdLoc()+" modifié.");
+            } else {
+                System.out.println("Taxi " + obj.getIdLoc() + " modifié.");
             }
             return read(obj.getIdLoc());
         }
 
     }
-    
-    
-      /**
+
+    /**
      * effacement d'une location sur base de son identifiant
      *
      * @throws SQLException erreur d'effacement
      * @param obj location à effacer
-     */    
+     */
     @Override
     public void delete(location obj) throws SQLException {
         String query1 = "DELETE FROM location WHERE idloc = ?";
@@ -115,15 +105,13 @@ public class locationDAO extends DAO<location> {
             int n = pstm.executeUpdate();
             if (n == 0) {
                 throw new SQLException("Aucune ligne de location effacée.");
-            }
-            else
-            {
-                System.out.println("Location "+obj.getIdLoc()+" supprimé.");
+            } else {
+                System.out.println("Location " + obj.getIdLoc() + " supprimé.");
             }
 
         }
     }
-  
+
     @Override
     public location read(int idloc) throws SQLException {
         String req = "select * from location where idloc = ?";
@@ -140,10 +128,10 @@ public class locationDAO extends DAO<location> {
                     float total = rs.getFloat("TOTAL");
                     int idclient = rs.getInt("IDCLIENT");
                     int idtaxi = rs.getInt("IDTAXI");
-                    int idadrdebut= rs.getInt("IDADRDEBUT");
-                    int idadrfin= rs.getInt("IDADRFIN");
+                    int idadrdebut = rs.getInt("IDADRDEBUT");
+                    int idadrfin = rs.getInt("IDADRFIN");
 
-                    return new location(idloc,dateloc,kmtotal,acompte,total,idclient,idtaxi,idadrdebut,idadrfin);
+                    return new location(idloc, dateloc, kmtotal, acompte, total, idclient, idtaxi, idadrdebut, idadrfin);
 
                 } else {
                     throw new SQLException("L'ID est inconnu");
@@ -154,7 +142,4 @@ public class locationDAO extends DAO<location> {
         }
 
     }
-    }
-
-
 }
