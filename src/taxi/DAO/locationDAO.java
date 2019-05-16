@@ -8,6 +8,8 @@ package taxi.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import taxi.metier.location;
 
@@ -28,7 +30,7 @@ public class locationDAO extends DAO<location> {
         String query1 = "INSERT INTO location(dateloc,kmtotal,acompte,total,idadrdebut,idadrfin,idtaxi,idclient)"
                 + "VALUES(?,?,?,?,?,?,?,?)";
         String query2
-                = "select idloc from location where idadrdebut =? and idadrfin = ? and idtaxi = ? and idclient = ?;";
+                = "select idloc from location where dateloc = ? and kmtotal = ? and acompte = ? and total = ? and idadrdebut =? and idadrfin = ? and idtaxi = ? and idclient = ?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
                 PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
 
@@ -42,6 +44,10 @@ public class locationDAO extends DAO<location> {
             pstm1.setInt(8, obj.getIdClient());
             int nl = pstm1.executeUpdate();
             System.out.println(nl + " ligne(s) insérée.");
+            pstm2.setString(1, obj.getDateLoc());
+            pstm2.setInt(2, obj.getKmtotal());
+            pstm2.setFloat(3, obj.getAcompte());
+            pstm2.setFloat(4, obj.getTotal());
             pstm2.setInt(5, obj.getIdAdrDebut());
             pstm2.setInt(6, obj.getIdAdrFin());
             pstm2.setInt(7, obj.getIdTaxi());
@@ -112,6 +118,13 @@ public class locationDAO extends DAO<location> {
         }
     }
 
+    /**
+     * récupération des données d'une location sur base de son identifiant
+     *
+     * @throws SQLException id inconnu
+     * @param idloc identifiant de la location
+     * @return location trouvée
+     */
     @Override
     public location read(int idloc) throws SQLException {
         String req = "select * from location where idloc = ?";
@@ -142,4 +155,43 @@ public class locationDAO extends DAO<location> {
         }
 
     }
+
+    /**
+     * méthode permettant de récupérer toutes les locations d'une certaine date
+     *
+     * @param date date recherchée
+     * @return liste de location
+     * @throws SQLException date introuvable
+     */
+    public List<location> rechDate(String date) throws SQLException {
+        List<location> plusieurs = new ArrayList<>();
+        String req = "select * from location where dateloc LIKE ?";
+
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setString(1, "%"+date+"%");
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    int idloc = rs.getInt("IDLOC");
+                    String dateloc = rs.getString("DATELOC");
+                    int kmtotal = rs.getInt("KMTOTAL");
+                    float acompte = rs.getFloat("ACOMPTE");
+                    float total = rs.getFloat("TOTAL");
+                    int idclient = rs.getInt("IDCLIENT");
+                    int idtaxi = rs.getInt("IDTAXI");
+                    int idadrdebut = rs.getInt("IDADRDEBUT");
+                    int idadrfin = rs.getInt("IDADRFIN");
+                    plusieurs.add(new location(idloc, dateloc, kmtotal, acompte, total, idclient, idtaxi, idadrdebut, idadrfin));
+                }
+
+                if (!trouve) {
+                    throw new SQLException("Recherche impossible");
+                } else {
+                    return plusieurs;
+                }
+            }
+        }
+    }
+
 }

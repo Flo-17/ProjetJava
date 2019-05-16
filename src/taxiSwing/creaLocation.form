@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
-  </Properties>
-  <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
-  </SyntheticProperties>
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -23,13 +16,172 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="idloc" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="date" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="kmtotal" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="acompte" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="total" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="idcli" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="idtaxi" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="idadrdebut" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="idadrfin" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="383" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="txtAdrDebut" alignment="1" pref="131" max="32767" attributes="0"/>
+                  <Component id="txtIdtaxi" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtIdcli" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtTotal" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtAcompte" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtKmtotal" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtDate" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtLocation" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtAdrFin" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="idloc" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtLocation" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="date" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDate" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="kmtotal" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtKmtotal" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="acompte" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAcompte" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="total" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="idcli" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtIdcli" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="idtaxi" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtIdtaxi" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="idadrdebut" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAdrDebut" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="idadrfin" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAdrFin" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="idloc">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID de la location "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="date">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Date"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="kmtotal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="KM total"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="acompte">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Acompte"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="total">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="idcli">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID client"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="idtaxi">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID taxi"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="idadrdebut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID adresse debut"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="idadrfin">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID adresse fin"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cr&#xe9;ation"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtLocation">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtDate">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtKmtotal">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAcompte">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtTotal">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtIdcli">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtIdtaxi">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAdrDebut">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAdrDebutActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAdrFin">
+    </Component>
+  </SubComponents>
 </Form>

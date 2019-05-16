@@ -150,7 +150,7 @@ public class location {
      *
      * @param acompte acompte
      */
-    public void setAccompte(float acompte) {
+    public void setAcompte(float acompte) {
         this.acompte = acompte;
     }
 
@@ -251,7 +251,7 @@ public class location {
      */
     @Override
     public String toString() {
-        return "";
+        return "Location : "+idLoc+" en date du "+dateLoc+". Total de km : "+kmtotal+", acompte de "+acompte+" pour un total de "+total+". ID du client : "+idClient+", ID du taxi : "+idTaxi+". ID adresse début : "+idAdrDebut+", ID adresse fin : "+idAdrFin;
     }
 
 }
