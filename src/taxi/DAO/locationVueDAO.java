@@ -5,16 +5,13 @@
  */
 package taxi.DAO;
 
-import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import myconnections.DBConnection;
 import taxi.metier.locationVue;
-import taxi.metier.taxi;
 
 public class locationVueDAO extends DAO<locationVue> {
     
@@ -66,6 +63,9 @@ public class locationVueDAO extends DAO<locationVue> {
         }
 
     }
+    
+    
+    
 
     @Override
     public locationVue read(int id) throws SQLException {

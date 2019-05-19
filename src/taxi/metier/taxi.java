@@ -148,9 +148,6 @@ public class taxi {
     }
 
     
-    
-    
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -158,9 +155,9 @@ public class taxi {
     }
 
     /**
-     * methode toString
+     * methode equels pour vérifier si deux objets sont égaux
      *
-     * @return infos completes
+     * @return true ou false
      */
     @Override
     public boolean equals(Object obj) {
@@ -179,10 +176,16 @@ public class taxi {
         }
         return true;
     }
+    
+    /**
+     * methode toString
+     *
+     * @return infos completes
+     */
 
     @Override
     public String toString() {
-        return "Taxi : " + idtaxi + ", immatriculation : " + immatriculation + " (" + carburant + "), prix au km : " + prixkm + ". " + description;
+        return "Taxi : "+idtaxi+", immatriculation : "+immatriculation+" ("+carburant+"), prix au km : "+prixkm+". "+description+" ";        
     }
 
 }

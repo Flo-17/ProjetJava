@@ -51,6 +51,7 @@ public class gestionLocation extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(10, 10));
         getContentPane().setLayout(new java.awt.CardLayout());
         getContentPane().add(creaLocation1, "card2");
         getContentPane().add(rechLocation1, "card3");

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import myconnections.DBConnection;
 import taxi.DAO.taxiDAO;
+import taxi.DAO.locationDAO;
 
 /**
  *
@@ -29,12 +30,15 @@ public class gestionTaxi extends javax.swing.JFrame {
         }
 
         taxiDAO taxiDAO = new taxiDAO();
+        locationDAO locationDAO = new locationDAO();
         taxiDAO.setConnection(dbConnect);
         
         
         creaTaxi1.setTaxiDAO(taxiDAO);
         rechTaxi1.setTaxiDAO(taxiDAO);
         rechDescription1.setTaxiDAO(taxiDAO);
+        taxiLocation1.setTaxiDAO(taxiDAO);
+        taxiLocation1.setLocationDAO(locationDAO);
     }
     
     @SuppressWarnings("unchecked")
@@ -44,17 +48,21 @@ public class gestionTaxi extends javax.swing.JFrame {
         creaTaxi1 = new taxiSwing.creaTaxi();
         rechDescription1 = new taxiSwing.rechDescription();
         rechTaxi1 = new taxiSwing.rechTaxi();
+        taxiLocation1 = new taxiSwing.TaxiLocation();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         itemCrea1 = new javax.swing.JMenuItem();
         itemCrea2 = new javax.swing.JMenuItem();
         itemCrea3 = new javax.swing.JMenuItem();
+        itemCrea4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(10, 10));
         getContentPane().setLayout(new java.awt.CardLayout());
         getContentPane().add(creaTaxi1, "card2");
         getContentPane().add(rechDescription1, "card3");
         getContentPane().add(rechTaxi1, "card4");
+        getContentPane().add(taxiLocation1, "card5");
 
         jMenu1.setText("Options");
 
@@ -82,6 +90,17 @@ public class gestionTaxi extends javax.swing.JFrame {
         });
         jMenu1.add(itemCrea3);
 
+        itemCrea4.setText("Locations liées");
+        itemCrea4.setToolTipText("");
+        itemCrea4.setAlignmentX(1.5F);
+        itemCrea4.setAlignmentY(1.5F);
+        itemCrea4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCrea4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(itemCrea4);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -100,6 +119,10 @@ public class gestionTaxi extends javax.swing.JFrame {
     private void itemCrea3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCrea3ActionPerformed
         cardl.show(this.getContentPane(), "card3");
     }//GEN-LAST:event_itemCrea3ActionPerformed
+
+    private void itemCrea4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCrea4ActionPerformed
+        cardl.show(this.getContentPane(), "card5");
+    }//GEN-LAST:event_itemCrea4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,9 +163,11 @@ public class gestionTaxi extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemCrea1;
     private javax.swing.JMenuItem itemCrea2;
     private javax.swing.JMenuItem itemCrea3;
+    private javax.swing.JMenuItem itemCrea4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private taxiSwing.rechDescription rechDescription1;
     private taxiSwing.rechTaxi rechTaxi1;
+    private taxiSwing.TaxiLocation taxiLocation1;
     // End of variables declaration//GEN-END:variables
 }

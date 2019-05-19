@@ -5,24 +5,22 @@
  */
 package taxi.DAO;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
-import myconnections.DBConnection;
+import taxi.metier.location;
 import taxi.metier.taxi;
 
 /**
  *
  * @author camma
  */
-public class taxiDAO extends DAO<taxi> {    
-    
+public class taxiDAO extends DAO<taxi> {
+
     /**
      * création d'un taxi sur base des valeurs de son objet métier
      *
@@ -62,8 +60,6 @@ public class taxiDAO extends DAO<taxi> {
         }
     }
 
-    
-    
     /**
      * récupération des données d'un taxi sur base de son identifiant
      *
@@ -98,7 +94,6 @@ public class taxiDAO extends DAO<taxi> {
 
     }
 
-    
     /**
      * mise à jour des données du taxi sur base de son identifiant
      *
@@ -119,17 +114,15 @@ public class taxiDAO extends DAO<taxi> {
             int n = pstm.executeUpdate();
             if (n == 0) {
                 throw new SQLException("Aucune ligne client mise à jour");
-            }
-            else
-            {
-                System.out.println("Taxi "+obj.getIdtaxi()+" modifié.");
+            } else {
+                System.out.println("Taxi " + obj.getIdtaxi() + " modifié.");
             }
             return read(obj.getIdtaxi());
         }
 
     }
 
-      /**
+    /**
      * effacement du taxi sur base de son identifiant
      *
      * @throws SQLException erreur d'effacement
@@ -143,19 +136,17 @@ public class taxiDAO extends DAO<taxi> {
             int n = pstm.executeUpdate();
             if (n == 0) {
                 throw new SQLException("Aucune ligne du taxi effacée.");
-            }
-            else
-            {
-                System.out.println("Taxi "+obj.getIdtaxi()+" supprimé.");
+            } else {
+                System.out.println("Taxi " + obj.getIdtaxi() + " supprimé.");
             }
 
         }
     }
 
-    
     /**
-     * méthode permettant de récupérer tous les taxis dont la description comporte un
-     * certain mot
+     * méthode permettant de récupérer tous les taxis dont la description
+     * comporte un certain mot
+     *
      * @param desc mot de la description recherché
      * @return liste de taxi
      * @throws SQLException mot introuvable
@@ -165,7 +156,7 @@ public class taxiDAO extends DAO<taxi> {
         String req = "select * from taxi where description LIKE ?";
 
         try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
-            pstm.setString(1, "%"+desc+"%");
+            pstm.setString(1, "%" + desc + "%");
             try (ResultSet rs = pstm.executeQuery()) {
                 boolean trouve = false;
                 while (rs.next()) {
@@ -186,4 +177,42 @@ public class taxiDAO extends DAO<taxi> {
             }
         }
     }
+    
+    /**
+     * méthode permettant de récupérer toutes les locations d'un id de taxi
+     *
+     * @param idtaxi id du taxi dont on veut afficher les locations
+     * @return liste de location
+     * @throws SQLException id introuvable
+     */
+
+    public List<location> rechLoc(int idtaxi) throws SQLException {
+        List<location> taxi = new ArrayList<>();
+        String req = "select * from location where idtaxi = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(req)) {
+            pstm.setInt(1,idtaxi);
+            try (ResultSet rs = pstm.executeQuery()) {
+                boolean trouve = false;
+                while (rs.next()) {
+                    trouve = true;
+                    int idloc = rs.getInt("IDLOC");
+                    String dateloc = rs.getString("DATELOC");
+                    int kmtotal = rs.getInt("KMTOTAL");
+                    float acompte = rs.getFloat("ACOMPTE");
+                    float total = rs.getFloat("TOTAL");
+                    int idclient = rs.getInt("IDCLIENT");
+                    idtaxi = rs.getInt("IDTAXI");
+                    int idadrdebut = rs.getInt("IDADRDEBUT");
+                    int idadrfin = rs.getInt("IDADRFIN");
+                    taxi.add(new location(idloc, dateloc, kmtotal, acompte, total, idclient, idtaxi, idadrdebut, idadrfin));
+                }
+                if (!trouve) {
+                    throw new SQLException("Recherche impossible");
+                } else {
+                    return taxi;
+                }
+            }
+        }
+    }
+
 }

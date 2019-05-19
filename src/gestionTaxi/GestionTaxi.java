@@ -6,10 +6,8 @@
 package gestionTaxi;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -62,7 +60,7 @@ public class GestionTaxi {
                 case 1:
                     int ch2 = 0;
                     do {
-                        System.out.println("1.Nouveau taxi \n2.Recherche de taxi\n3.Modification d'un taxi\n4.Suppression d'un taxi\n5.Recherche sur la description\n6.Retour");
+                        System.out.println("1.Nouveau taxi \n2.Recherche de taxi\n3.Modification d'un taxi\n4.Suppression d'un taxi\n5.Recherche sur la description\n6.Recherche des locations d'un ID\n7.Retour");
                         System.out.print("Choix : ");
                         ch2 = sc.nextInt();
                         sc.skip("\n");
@@ -83,13 +81,16 @@ public class GestionTaxi {
                                 rechDescriptionTaxi();
                                 break;
                             case 6:
+                                affichageLoc();
+                                break;
+                            case 7:
                                 System.out.println("Retour.");
                                 break;
                             default:
                                 System.out.println("Choix incorrect");
                         }
 
-                    } while (ch2 != 6);
+                    } while (ch2 != 7);
                     break;
                 case 2:
                     int ch3 = 0;
@@ -99,15 +100,14 @@ public class GestionTaxi {
                         ch3 = sc.nextInt();
                         sc.skip("\n");
                         switch (ch3) {
-                            case 1:
-                        {
-                            try {
-                                nouvelleLoc();
-                            } catch (ParseException ex) {
-                                Logger.getLogger(GestionTaxi.class.getName()).log(Level.SEVERE, null, ex);
+                            case 1: {
+                                try {
+                                    nouvelleLoc();
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(GestionTaxi.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
-                        }
-                                break;
+                            break;
                             case 2:
                                 rechercheLoc();
                                 break;
@@ -118,9 +118,6 @@ public class GestionTaxi {
                                 supLoc();
                                 break;
                             case 5:
-                                //totalLoc();
-                                break;
-                            case 6:
                                 System.out.println("Retour.");
                                 break;
                             default:
@@ -129,7 +126,8 @@ public class GestionTaxi {
 
                     } while (ch3 != 5);
                     break;
-                case 3 : System.out.println("Fin.");
+                case 3:
+                    System.out.println("Fin.");
             }
         } while (ch != 3);
 
@@ -208,9 +206,9 @@ public class GestionTaxi {
         String nom = sc.nextLine();
         try {
             List<taxi> plusieurs = ((taxiDAO) taxiDAO).rechDesc(nom);
-            for (taxi t : plusieurs) {
-                System.out.println(plusieurs);
-            }
+
+            System.out.println(plusieurs);
+
         } catch (SQLException e) {
             System.out.println("erreur " + e.getMessage());
         }
@@ -257,7 +255,7 @@ public class GestionTaxi {
         }
 
     }
-    
+
     public void modifLoc() {
         System.out.println("ID ? ");
         int idloc = sc.nextInt();
@@ -280,7 +278,6 @@ public class GestionTaxi {
         int idtaxi = sc.nextInt();
         System.out.println("Nouveau id client :");
         int idclient = sc.nextInt();
-        
 
         locationActuelle = new location(idloc, dateloc, kmtotal, acompte, total, idadrdebut, idadrfin, idtaxi, idclient);
         try {
@@ -290,7 +287,7 @@ public class GestionTaxi {
         }
 
     }
-    
+
     public void supLoc() {
         try {
             System.out.println("ID ? ");
@@ -301,10 +298,22 @@ public class GestionTaxi {
             System.out.println("erreur " + e.getMessage());
         }
     }
-    
-    
 
-    public static void main(String[] args) throws SQLException {
+    public void affichageLoc() throws SQLException {
+        try {
+            System.out.println("Locations de l'ID recherché");
+            System.out.println("ID : ");
+            int id = sc.nextInt();
+
+            List<location> loc = ((taxiDAO) taxiDAO).rechLoc(id);
+
+            System.out.println(loc);
+        } catch (SQLException e) {
+            System.out.println("erreur " + e.getMessage());
+        }
+    }
+
+public static void main(String[] args) throws SQLException {
         GestionTaxi gt = new GestionTaxi();
         gt.gestion();
 
