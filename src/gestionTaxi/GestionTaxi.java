@@ -54,7 +54,7 @@ public class GestionTaxi {
 
         int ch = 0;
         do {
-            System.out.println("1.Taxi\n2.Location");
+            System.out.println("1.Taxi\n2.Location\n3.FIN");
             System.out.print("Choix : ");
             ch = sc.nextInt();
             sc.skip("\n");
@@ -94,7 +94,7 @@ public class GestionTaxi {
                 case 2:
                     int ch3 = 0;
                     do {
-                        System.out.println("1.Nouvelle location \n2.Recherche d'une location\n3.Modification d'une location\n4.Suppression d'une location\n5.Total d'une location\n6.Retour");
+                        System.out.println("1.Nouvelle location \n2.Recherche d'une location\n3.Modification d'une location\n4.Suppression d'une location\n5.Retour");
                         System.out.print("Choix : ");
                         ch3 = sc.nextInt();
                         sc.skip("\n");
@@ -127,10 +127,11 @@ public class GestionTaxi {
                                 System.out.println("Choix incorrect");
                         }
 
-                    } while (ch3 != 6);
+                    } while (ch3 != 5);
                     break;
+                case 3 : System.out.println("Fin.");
             }
-        } while (ch != 2);
+        } while (ch != 3);
 
         DBConnection.closeConnection();
     }
@@ -250,7 +251,7 @@ public class GestionTaxi {
         locationActuelle = new location(0, dateloc, kmtotal, acompte, total, idadrdebut, idadrfin, idtaxi, idclient);
         try {
             locationActuelle = locationDAO.create(locationActuelle);
-            System.out.println("Location : " + locationActuelle);
+            System.out.println(locationActuelle);
         } catch (SQLException e) {
             System.out.println("erreur :" + e);
         }
