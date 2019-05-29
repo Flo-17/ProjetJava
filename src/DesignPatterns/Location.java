@@ -14,8 +14,6 @@ package DesignPatterns;
  * @author Florian Cammarata
  * @version 1.0
  */
-import java.sql.Date;
-
 public class Location extends Subject {
 
     protected int idLoc;
@@ -46,7 +44,7 @@ public class Location extends Subject {
     /**
      * identifiant unique de l'adresse de fin
      */
-    protected int idTaxi;
+    protected Taxi t;
     /**
      * identifiant uniquedu taxi
      */
@@ -76,7 +74,7 @@ public class Location extends Subject {
      * @param idTaxi identifiant unique du taxi loué
      * @param idClient identifiant unique du client qui loue le taxi
      */
-    public Location(int idLoc, String dateLoc, int kmtotal, float acompte, float total, int idAdrDebut, int idAdrFin, int idTaxi, int idClient) {
+    public Location(int idLoc, String dateLoc, int kmtotal, float acompte, float total, int idAdrDebut, int idAdrFin, Taxi t, int idClient) {
         this.idLoc = idLoc;
         this.dateLoc = dateLoc;
         this.kmtotal = kmtotal;
@@ -84,7 +82,7 @@ public class Location extends Subject {
         this.total = total;
         this.idAdrDebut = idAdrDebut;
         this.idAdrFin = idAdrFin;
-        this.idTaxi = idTaxi;
+        this.t = null;
         this.idClient = idClient;
     }
 
@@ -214,47 +212,29 @@ public class Location extends Subject {
         this.idAdrFin = idAdrFin;
     }
 
-    /**
-     * getter id du taxi
-     *
-     * @return id du taxi
-     */
-    public int getIdTaxi() {
-        return idTaxi;
+    public Taxi getT() {
+        return t;
     }
 
-    /**
-     * setter idtaxi
-     *
-     * @param idTaxi id du taxi
-     */
-    public void setIdTaxi(int idTaxi) {
-        this.idTaxi = idTaxi;
+    public void setT(Taxi t) {
+        this.t = t;
         notifyObservers();
     }
 
-    /**
-     * getter id du client
-     *
-     * @return id du client
-     */
     public int getIdClient() {
         return idClient;
     }
 
-    /**
-     * setter idclient
-     *
-     * @param idClient id du client
-     */
     public void setIdClient(int idClient) {
         this.idClient = idClient;
+
     }
 
     public String getNotification() {
-        return "Nouveau taxi pour la location numéro "+idLoc+" : " + idTaxi;
+        return "Nouveau taxi pour la location numéro " + idLoc + " : " + t;
     }
 
+    
     /**
      * methode toString
      *
@@ -262,7 +242,7 @@ public class Location extends Subject {
      */
     @Override
     public String toString() {
-        return "Location : " + idLoc + " en date du " + dateLoc + ". Total de km : " + kmtotal + ", acompte de " + acompte + " pour un total de " + total + ". ID du client : " + idClient + ", ID du taxi : " + idTaxi + ". ID adresse début : " + idAdrDebut + ", ID adresse fin : " + idAdrFin;
+        return "Location : " + idLoc + " en date du " + dateLoc + ". Total de km : " + kmtotal + ", acompte de " + acompte + " pour un total de " + total + ". ID du client : " + idClient + "ID adresse début : " + idAdrDebut + ", ID adresse fin : " + idAdrFin;
     }
 
 }
